@@ -25,6 +25,11 @@ export default (appInfo: EggAppInfo) => {
             db: 0,
         },
     };
+    config.security = {
+        csrf: {
+            enable: false,
+        },
+    };
     config.mysql = {
         // 单数据库信息配置
         client: {
