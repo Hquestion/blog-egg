@@ -1,6 +1,10 @@
-# hackernews-async-ts
+# Blog-Egg
 
-[Hacker News](https://news.ycombinator.com/) showcase using typescript && egg
+A personal blog written in egg.js
+
+## 设计
+
+![博客类图](./博客类图.png)
 
 ## QuickStart
 
