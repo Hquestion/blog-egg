@@ -12,9 +12,10 @@ logs/
 *.js
 !.autod.conf.js
 
-app/**/*.js
+!database/**/*.js
 test/**/*.js
 config/**/*.js
 app/**/*.map
 test/**/*.map
 config/**/*.map
+app/**/*.js

@@ -4,7 +4,7 @@ A personal blog written in egg.js
 
 ## 设计
 
-![博客类图](./博客类图.png)
+![博客类图](./博客类图.jpg)
 
 ## QuickStart
 
