@@ -15,13 +15,14 @@ module.exports = app => {
             type: STRING(30),
             allowNull: false,
         },
+        isDelete: { type: STRING(1), defaultValue: '0', field: 'is_delete' },
         createdAt: { type: STRING(30), field: 'created_at' },
         updatedAt: { type: STRING(30), field: 'updated_at' },
     });
 
     Star.associate = function() {
-        app.model.Star.hasMany(app.model.User, { as: 't_users', foreignKey: 'user_id' });
-        app.model.Star.hasMany(app.model.Post, { as: 't_posts', foreignKey: 'post_id' });
+        app.model.Star.belongsTo(app.model.User, { as: 'userMeta', foreignKey: 'user_id' });
+        app.model.Star.belongsTo(app.model.Post, { as: 'postMeta', foreignKey: 'post_id' });
     };
 
     return Star;

@@ -15,13 +15,13 @@ export default (appInfo: EggAppInfo) => {
 
     config.jwt = {
         enable: true,
-        ignore: [ '/api/v1/login/', '/public/' ], // 哪些请求不需要认证
+        ignore: [ '/api/v1/login/', '/public/', '/api/v1/users/' ], // 哪些请求不需要认证
     };
     config.redis = {
         client: {
             port: 6379,
             host: '127.0.0.1',
-            password: 'auth',
+            password: '123456',
             db: 0,
         },
     };
@@ -37,7 +37,7 @@ export default (appInfo: EggAppInfo) => {
             // 密码
             password: 'root',
             // 数据库名
-            database: 'blog-node',
+            database: 'blog_node',
         },
         // 是否加载到 app 上，默认开启
         app: true,
@@ -48,11 +48,9 @@ export default (appInfo: EggAppInfo) => {
         dialect: 'mysql',
         host: '127.0.0.1',
         port: 3306,
-        // 用户名
-        user: 'root',
         // 密码
         password: 'root',
-        database: 'blog-node',
+        database: 'blog_node',
     };
     // 异常处理配置
     config.onerror = {

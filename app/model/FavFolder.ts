@@ -10,12 +10,13 @@ module.exports = app => {
             type: STRING(30),
             allowNull: false,
         },
+        isDelete: { type: STRING(1), defaultValue: '0', field: 'is_delete' },
         createdAt: { type: STRING(30), field: 'created_at' },
         updatedAt: { type: STRING(30), field: 'updated_at' },
     });
 
     FavFolder.associate = function() {
-        app.model.FavFolder.belongsTo(app.model.User, { as: 't_users', foreignKey: 'user_id' });
+        app.model.FavFolder.belongsTo(app.model.User, { as: 'userMeta', foreignKey: 'user_id' });
     };
 
     return FavFolder;

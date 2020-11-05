@@ -21,7 +21,14 @@ module.exports = app => {
     });
 
     User.associate = function() {
-        app.model.User.hasMany(app.model.Post, { as: 't_posts' });
+        app.model.User.hasMany(app.model.Post, { as: 'posts', foreignKey: 'author_id' });
+        app.model.User.hasMany(app.model.Category, { as: 'categories', foreignKey: 'user_id' });
+        app.model.User.hasMany(app.model.Comment, { as: 'comments', foreignKey: 'user_id' });
+        app.model.User.hasMany(app.model.Fav, { as: 'favs', foreignKey: 'user_id' });
+        app.model.User.hasMany(app.model.FavFolder, { as: 'favFolders', foreignKey: 'user_id' });
+        app.model.User.hasMany(app.model.Series, { as: 'series', foreignKey: 'user_id' });
+        app.model.User.hasMany(app.model.Star, { as: 'stars', foreignKey: 'user_id' });
+        app.model.User.hasMany(app.model.Tag, { as: 'tags', foreignKey: 'user_id' });
     };
 
     return User;

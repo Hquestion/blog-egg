@@ -20,14 +20,15 @@ module.exports = app => {
             type: STRING(30),
             allowNull: true,
         },
+        isDelete: { type: STRING(1), defaultValue: '0', field: 'is_delete' },
         createdAt: { type: STRING(30), field: 'created_at' },
         updatedAt: { type: STRING(30), field: 'updated_at' },
     });
 
     Fav.associate = function() {
-        app.model.Fav.hasMany(app.model.User, { as: 't_users', foreignKey: 'user_id' });
-        app.model.Fav.hasMany(app.model.Post, { as: 't_posts', foreignKey: 'post_id' });
-        app.model.Fav.hasOne(app.model.FavFolder, { as: 't_fav_folders', foreignKey: 'folder_id' });
+        app.model.Fav.belongsTo(app.model.User, { as: 'userMeta', foreignKey: 'user_id' });
+        app.model.Fav.belongsTo(app.model.Post, { as: 'postMeta', foreignKey: 'post_id' });
+        app.model.Fav.belongsTo(app.model.FavFolder, { as: 'favFolder', foreignKey: 'folder_id' });
     };
 
     return Fav;

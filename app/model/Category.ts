@@ -10,13 +10,14 @@ module.exports = app => {
             type: STRING(30),
             allowNull: true,
         },
+        isDelete: { type: STRING(1), defaultValue: '0', field: 'is_delete' },
         createdAt: { type: STRING(30), field: 'created_at' },
         updatedAt: { type: STRING(30), field: 'updated_at' },
     });
 
-    Category.associate = function() {
-        app.model.Category.belongsTo(app.model.User, { as: 't_users', foreignKey: 'user_id' });
-    };
+    // Category.associate = function() {
+    //     app.model.Category.belongsTo(app.model.User, { as: 't_users', foreignKey: 'user_id' });
+    // };
 
     return Category;
 };
