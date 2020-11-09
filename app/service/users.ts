@@ -56,4 +56,20 @@ export default class UserService extends Service {
         const user = await this.findUserById(uuid);
         return await user.getPosts({ where: { where, isDelete: '0' } });
     }
+
+    public async findUserByUsername(username) {
+        const { app, ctx } = this;
+        const { Op } = app.Sequelize;
+        return await ctx.model.User.findOne({
+            where: {
+                [Op.or]: [{
+                    name: username,
+                }, {
+                    email: username,
+                }, {
+                    phone: username,
+                }],
+            },
+        });
+    }
 }

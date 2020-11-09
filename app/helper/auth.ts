@@ -1,11 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as jwt from 'jsonwebtoken';
-console.log(jwt);
 
 export function loginToken(data, secret = '', expires = 7200) {
-    // eslint-disable-next-line no-debugger
-    debugger;
     const exp = Math.floor(Date.now() / 1000) + expires;
     const cert = secret || fs.readFileSync(path.join(__dirname, '../public/rsa_private_key.pem'));// 私钥，看后面生成方法
     const token = jwt.sign({ data, exp }, cert);

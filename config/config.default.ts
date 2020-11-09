@@ -7,6 +7,7 @@ export default (appInfo: EggAppInfo) => {
     // use for cookie sign key, should change to your own and keep security
     config.keys = appInfo.name + '_1604397095848_2169';
     config.jwtSecrect = '_1604397095848_2169';
+    config.login_token_time = 24 * 60 * 60;
 
     // add your egg config in here
     config.middleware = [

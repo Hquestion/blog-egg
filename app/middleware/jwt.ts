@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as jwt from 'jsonwebtoken';
 
 type verifiedToken = {
-    corpid?: string,
+    username?: string,
     userid?: string
 };
 
@@ -28,12 +28,12 @@ module.exports = (_options, app) => {
         if (authToken) {
             authToken = authToken.substring(7);
             const res = verifyToken(authToken, app.config.jwtSecrect); // 解密获取的Token
-            if (res.corpid && res.userid) {
+            if (res.username && res.userid) {
                 // 如果需要限制单端登陆或者使用过程中废止某个token，或者更改token的权限。也就是说，一旦 JWT 签发了，在到期之前就会始终有效
                 // 此处使用redis进行保存
-                const redis_token = await app.redis.get(res.corpid + '' + res.userid); // 获取保存的token
+                const redis_token = await app.redis.get(res.username + '' + res.userid); // 获取保存的token
                 if (authToken === redis_token) {
-                    ctx.locals.corpid = res.corpid;
+                    ctx.locals.username = res.username;
                     ctx.locals.userid = res.userid;
                     await next();
                 } else {
