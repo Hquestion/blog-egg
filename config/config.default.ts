@@ -15,7 +15,7 @@ export default (appInfo: EggAppInfo) => {
 
     config.jwt = {
         enable: true,
-        ignore: [ '/api/v1/login/', '/public/', '/api/v1/users/' ], // 哪些请求不需要认证
+        ignore: [ '/api/v1/login/', '/public/', '/api/v1/users/', '/api/v1/posts/', '/api/v1/category/' ], // 哪些请求不需要认证
     };
     config.redis = {
         client: {

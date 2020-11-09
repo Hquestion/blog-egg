@@ -4,18 +4,17 @@ import dayjs from 'dayjs';
 import { paginationType, PostType } from '../../typings';
 
 export default class PostService extends Service {
-    public async list(name: string, page?: paginationType) {
+    public async list(name: string, pagination?: Partial<paginationType>) {
         const { ctx, app } = this;
         const { Op } = app.Sequelize;
-        const where: {name?: any, limit?: number, offset?: number} = {};
+        const where: {name?: any} = {};
         if (name) {
             where.name = { [Op.like]: name };
         }
-        if (page && page.limit && page.limit === -1) {
-            where.limit = page.limit;
-            where.offset = page.start || 1;
-        }
-        return await ctx.model.Post.findAll({ where: { where, isDelete: '0' } });
+        return await ctx.model.Post.findAll({
+            where: { isDelete: '0' },
+            ...pagination,
+        });
     }
 
     public async findPostById(uuid) {

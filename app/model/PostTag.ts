@@ -8,6 +8,8 @@ module.exports = app => {
         isDelete: { type: STRING(1), defaultValue: '0', field: 'is_delete' },
         createdAt: { type: STRING(30), field: 'created_at' },
         updatedAt: { type: STRING(30), field: 'updated_at' },
+    }, {
+        freezeTableName: true,
     });
 
     PostTag.associate = function() {

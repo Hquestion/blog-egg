@@ -9,4 +9,8 @@ export default (app: Application) => {
 
     router.resources('users', '/api/v1/users', controller.users);
     router.get('/api/v1/users/:id/getPosts', controller.users.getPosts);
+
+    router.resources('posts', '/api/v1/posts', controller.posts);
+
+    router.resources('posts', '/api/v1/category', controller.category);
 };

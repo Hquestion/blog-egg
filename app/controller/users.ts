@@ -9,7 +9,7 @@ export default class UserController extends Controller {
         const limit = +query.limit || -1;
         let pagination: paginationType | undefined;
         if (limit !== -1) {
-            pagination = { start: page, limit };
+            pagination = { start: (page - 1) * limit, limit };
         }
         ctx.body = await ctx.service.users.list(query.name || '', pagination);
     }

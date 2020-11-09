@@ -1,16 +1,12 @@
 import { Controller } from 'egg';
 import { paginationType } from '../../typings';
+import { generatePagination } from '../extend/helper';
 
 export default class PostController extends Controller {
     public async index() {
         const { ctx } = this;
         const { query } = ctx.request;
-        const page = +query.page || 1;
-        const limit = +query.limit || -1;
-        let pagination: paginationType | undefined;
-        if (limit !== -1) {
-            pagination = { start: page, limit };
-        }
+        const pagination: Partial<paginationType> = generatePagination(query);
         ctx.body = await ctx.service.posts.list(query.name || '', pagination);
     }
 

@@ -18,6 +18,8 @@ module.exports = app => {
         isAdmin: { type: STRING(1), defaultValue: '0', field: 'is_admin' },
         createdAt: { type: STRING(30), field: 'created_at' },
         updatedAt: { type: STRING(30), field: 'updated_at' },
+    }, {
+        freezeTableName: true,
     });
 
     User.associate = function() {

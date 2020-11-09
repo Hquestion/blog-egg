@@ -20,6 +20,8 @@ module.exports = app => {
         isTop: { type: STRING(1), defaultValue: '0', field: 'is_top' },
         createdAt: { type: STRING(30), field: 'created_at' },
         updatedAt: { type: STRING(30), field: 'updated_at' },
+    }, {
+        freezeTableName: true,
     });
 
     Post.associate = function() {
