@@ -41,6 +41,17 @@ export default class UserController extends Controller {
         ctx.body = await ctx.service.users.updateUser(uuid, { isDelete: '1' });
     }
 
+    public async getUserInfo() {
+        const { ctx } = this;
+        const uuid = ctx.locals.userid;
+        if (uuid) {
+            ctx.body = await ctx.service.users.findUserById(uuid);
+        } else {
+            ctx.status = 401;
+            ctx.body = { msg: '' };
+        }
+    }
+
     public async getPosts() {
         const { ctx } = this;
         const id = ctx.params.id;
