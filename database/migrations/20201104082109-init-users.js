@@ -8,7 +8,7 @@ module.exports = {
        */
         const { INTEGER, STRING } = Sequelize;
         await queryInterface.createTable('t_users', {
-            uuid: { type: STRING(30), primaryKey: true },
+            uuid: { type: STRING(50), primaryKey: true },
             name: STRING(30),
             age: INTEGER,
             gender: { type: STRING(1), defaultValue: '3' },

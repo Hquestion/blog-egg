@@ -2,12 +2,12 @@ module.exports = {
     up: async (queryInterface, Sequelize) => {
         const { STRING } = Sequelize;
         await queryInterface.createTable('t_tags', {
-            uuid: { primaryKey: true, type: STRING(30) },
+            uuid: { primaryKey: true, type: STRING(50) },
             title: STRING(30),
             description: STRING(100),
             user: {
                 field: 'user_id',
-                type: STRING(30),
+                type: STRING(50),
                 allowNull: true,
             },
             isDelete: { type: STRING(1), defaultValue: '0', field: 'is_delete' },

@@ -20,6 +20,7 @@ module.exports = app => {
         updatedAt: { type: STRING(30), field: 'updated_at' },
     }, {
         freezeTableName: true,
+        timestamps: false,
     });
 
     Star.associate = function() {

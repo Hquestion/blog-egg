@@ -2,21 +2,21 @@ module.exports = {
     up: async (queryInterface, Sequelize) => {
         const { STRING } = Sequelize;
         await queryInterface.createTable('t_comments', {
-            uuid: { primaryKey: true, type: STRING(30), allowNull: false },
+            uuid: { primaryKey: true, type: STRING(50), allowNull: false },
             content: STRING(5000),
             user: {
                 field: 'user_id',
-                type: STRING(30),
+                type: STRING(50),
                 allowNull: false,
             },
             post: {
                 field: 'post_id',
-                type: STRING(30),
+                type: STRING(50),
                 allowNull: false,
             },
             comment: {
                 field: 'comment_id',
-                type: STRING(30),
+                type: STRING(50),
                 allowNull: true,
             },
             isDelete: { type: STRING(1), defaultValue: '0', field: 'is_delete' },

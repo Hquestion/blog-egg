@@ -26,15 +26,16 @@ export default class PostService extends Service {
         const { ctx } = this;
         const model: Partial<PostType> = {};
         model.uuid = uuid();
-        model.createdAt = dayjs().format();
-        model.updatedAt = dayjs().format();
+        model.createdAt = dayjs().toISOString();
+        model.updatedAt = dayjs().toISOString();
+        console.log({ ...model, ...data });
         return await ctx.model.Post.create({ ...model, ...data });
     }
 
     public async updatePost(uuid, data) {
         const { ctx } = this;
         const model: Partial<PostType> = {};
-        model.updatedAt = dayjs().format();
+        model.updatedAt = dayjs().toISOString();
         return await ctx.model.Post.update({ ...model, ...data }, {
             where: {
                 uuid,

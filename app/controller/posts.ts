@@ -13,7 +13,10 @@ export default class PostController extends Controller {
     public async create() {
         const { ctx } = this;
         const data = ctx.request.body;
-        ctx.body = await ctx.service.posts.createPost(data);
+        const userId = ctx.locals.userid;
+        data.isPublished = +!!+data.isPublished + '';
+        data.isDelete = +!!+data.isDelete + '';
+        ctx.body = await ctx.service.posts.createPost({ ...data, author: userId });
     }
 
     public async show() {

@@ -8,15 +8,15 @@ module.exports = {
          */
         const { INTEGER, STRING } = Sequelize;
         await queryInterface.createTable('t_posts', {
-            uuid: { type: STRING(30), primaryKey: true },
+            uuid: { type: STRING(50), primaryKey: true },
             title: STRING(30),
             subtitle: STRING(100),
             content: { type: STRING },
             cover: STRING(100),
-            postTag: { type: STRING(30), allowNull: true, field: 'post_tag_id' },
-            category: { type: STRING(30), allowNull: true, field: 'category_id' },
-            series: { type: STRING(30), allowNull: true, field: 'series_id' },
-            author: { type: STRING(30), allowNull: false, field: 'author_id' },
+            postTag: { type: STRING(50), allowNull: true, field: 'post_tag_id' },
+            category: { type: STRING(50), allowNull: true, field: 'category_id' },
+            series: { type: STRING(50), allowNull: true, field: 'series_id' },
+            author: { type: STRING(50), allowNull: false, field: 'author_id' },
             read: INTEGER(10),
             fav: INTEGER(10),
             star: INTEGER(10),
