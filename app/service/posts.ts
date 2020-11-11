@@ -13,13 +13,22 @@ export default class PostService extends Service {
         }
         return await ctx.model.Post.findAll({
             where: { isDelete: '0' },
+            include: [
+                {
+                    model: ctx.model.User,
+                    as: 'user',
+                },
+            ],
             ...pagination,
         });
     }
 
     public async findPostById(uuid) {
         const { ctx } = this;
-        return await ctx.model.Post.findByPk(uuid);
+        const post = await ctx.model.Post.findByPk(uuid);
+        const user = await ctx.model.User.findByPk(post.author);
+        post.setDataValue('user', user);
+        return post;
     }
 
     public async createPost(data) {
@@ -28,7 +37,6 @@ export default class PostService extends Service {
         model.uuid = uuid();
         model.createdAt = dayjs().toISOString();
         model.updatedAt = dayjs().toISOString();
-        console.log({ ...model, ...data });
         return await ctx.model.Post.create({ ...model, ...data });
     }
 
@@ -37,6 +45,17 @@ export default class PostService extends Service {
         const model: Partial<PostType> = {};
         model.updatedAt = dayjs().toISOString();
         return await ctx.model.Post.update({ ...model, ...data }, {
+            where: {
+                uuid,
+            },
+        });
+    }
+
+    public async addStar(uuid) {
+        const { ctx } = this;
+        const post = await ctx.model.Post.findByPk(uuid);
+        const starCount = (post.star || 0) + 1;
+        return await ctx.model.Post.update({ star: starCount }, {
             where: {
                 uuid,
             },

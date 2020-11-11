@@ -2,6 +2,8 @@ import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
 
 export default (appInfo: EggAppInfo) => {
     const config = {} as PowerPartial<EggAppConfig>;
+    config.baseDir = '';
+    config.staticUrlPrefix = 'http://localhost:7001/public';
 
     // override config from framework / plugin
     // use for cookie sign key, should change to your own and keep security
@@ -14,9 +16,13 @@ export default (appInfo: EggAppInfo) => {
         'jwt',
     ];
 
+    config.multipart = {
+        mode: 'file',
+    };
+
     config.jwt = {
         enable: true,
-        ignore: [ '/api/v1/login/', '/public/', '/api/v1/category/' ], // 哪些请求不需要认证
+        ignore: [ '/api/v1/login/', '/public/', '/api/v1/common/upload/' ], // 哪些请求不需要认证
     };
     config.redis = {
         client: {

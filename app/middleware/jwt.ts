@@ -17,7 +17,7 @@ function verifyToken(token, secret?: string): verifiedToken {
             current = Math.floor(Date.now() / 1000);
         if (current <= exp) res = result.data || {};
     } catch (e) {
-        console.log(e);
+        // pass
     }
     return res;
 }

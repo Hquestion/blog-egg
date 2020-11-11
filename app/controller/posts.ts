@@ -38,4 +38,10 @@ export default class PostController extends Controller {
         const uuid = ctx.params.id;
         ctx.body = await ctx.service.posts.updatePost(uuid, { isDelete: '1' });
     }
+
+    public async starIncrease() {
+        const { ctx } = this;
+        const uuid = ctx.params.id;
+        ctx.body = await ctx.service.posts.addStar(uuid);
+    }
 }

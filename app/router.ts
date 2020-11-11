@@ -13,5 +13,10 @@ export default (app: Application) => {
 
     router.resources('posts', '/api/v1/posts', controller.posts);
 
-    router.resources('posts', '/api/v1/category', controller.category);
+    router.resources('category', '/api/v1/category', controller.category);
+
+    router.post('/api/v1/star/:uuid', controller.star.create);
+    router.get('/api/v1/star/isStar/:uuid', controller.star.isStar);
+
+    router.post('/api/v1/common/upload', controller.common.upload);
 };
