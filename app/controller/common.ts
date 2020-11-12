@@ -24,7 +24,7 @@ export default class CommonController extends Controller {
                 const filename = file.filename.toLowerCase();
                 const filenameList = filename.split('.');
                 const ext = filenameList.slice(-1)[0];
-                const randomFilename = filenameList.slice(0, -1).join('') + '__' + uuid().slice(0, 10) + '.' + ext;
+                const randomFilename = dayjs().format('YYYY-MM-DD_HH-mm-ss') + '__' + uuid().slice(0, 10) + '.' + ext;
                 const targetPath = path.join(absoluteFolderName, randomFilename);
                 const source = fs.createReadStream(file.filepath);
                 const target = fs.createWriteStream(targetPath);

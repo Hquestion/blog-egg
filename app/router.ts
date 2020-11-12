@@ -12,6 +12,8 @@ export default (app: Application) => {
     router.get('/api/v1/users/:id/getPosts', controller.users.getPosts);
 
     router.resources('posts', '/api/v1/posts', controller.posts);
+    router.post('/api/v1/posts/:uuid/comment', controller.posts.addPostComment);
+    router.get('/api/v1/posts/:uuid/comments', controller.posts.getPostComments);
 
     router.resources('category', '/api/v1/category', controller.category);
 

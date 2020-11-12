@@ -10,6 +10,7 @@ import ExportAuth from '../../../app/service/auth';
 import ExportCategory from '../../../app/service/category';
 import ExportComment from '../../../app/service/comment';
 import ExportPosts from '../../../app/service/posts';
+import ExportPostTag from '../../../app/service/postTag';
 import ExportSeries from '../../../app/service/series';
 import ExportStar from '../../../app/service/Star';
 import ExportTag from '../../../app/service/tag';
@@ -22,6 +23,7 @@ declare module 'egg' {
     category: AutoInstanceType<typeof ExportCategory>;
     comment: AutoInstanceType<typeof ExportComment>;
     posts: AutoInstanceType<typeof ExportPosts>;
+    postTag: AutoInstanceType<typeof ExportPostTag>;
     series: AutoInstanceType<typeof ExportSeries>;
     star: AutoInstanceType<typeof ExportStar>;
     tag: AutoInstanceType<typeof ExportTag>;

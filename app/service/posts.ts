@@ -1,7 +1,7 @@
 import { Service } from 'egg';
 import { v4 as uuid } from 'uuid';
 import dayjs from 'dayjs';
-import { paginationType, PostType } from '../../typings';
+import { CommentType, paginationType, PostType, UserType } from '../../typings';
 
 export default class PostService extends Service {
     public async list(name: string, pagination?: Partial<paginationType>) {
@@ -18,6 +18,9 @@ export default class PostService extends Service {
                     model: ctx.model.User,
                     as: 'user',
                 },
+            ],
+            order: [
+                [ 'createdAt', 'DESC' ],
             ],
             ...pagination,
         });
@@ -59,6 +62,78 @@ export default class PostService extends Service {
             where: {
                 uuid,
             },
+        });
+    }
+
+    public async addPostComment(postId, userid, data: {content: string, commentId?: string}) {
+        const { ctx } = this;
+        const model: Partial<CommentType> = {};
+        model.uuid = uuid();
+        model.content = data.content || '';
+        model.user = userid;
+        model.post = postId;
+        if (data.commentId) {
+            model.comment = data.commentId;
+        }
+        model.createdAt = dayjs().toISOString();
+        model.updatedAt = dayjs().toISOString();
+        return await ctx.model.Comment.create(model);
+    }
+
+    public async getPostComments(uuid: string, pagination?: Partial<paginationType>) {
+        const { ctx } = this;
+        const comments = await ctx.model.Comment.findAll({
+            where: { isDelete: '0', post: uuid },
+            include: [
+                {
+                    model: ctx.model.User,
+                    as: 'userMeta',
+                },
+                {
+                    model: ctx.model.Post,
+                    as: 'postMeta',
+                },
+                {
+                    model: ctx.model.Comment,
+                    as: 'commentMeta',
+                },
+            ],
+            order: [
+                [ 'createdAt', 'DESC' ],
+            ],
+            ...pagination,
+        });
+        if (!comments || comments.length === 0) {
+            return [];
+        }
+        const users: UserType[] = await this.getCommentsUsers(comments);
+        return comments.map((comment, index) => {
+            comment.commentMeta && comment.commentMeta.setDataValue('userMeta', users[index]);
+            return comment;
+        });
+    }
+
+    private getCommentsUsers(comments): Promise<UserType[]> {
+        const users: UserType[] = [];
+        return new Promise(resolve => {
+            let count = 0;
+            for (let i = 0; i < comments.length; i++) {
+                let promise;
+                if (comments[i].commentMeta) {
+                    promise = comments[i].commentMeta.getUserMeta();
+                } else {
+                    promise = Promise.resolve(null);
+                }
+                promise.then(data => {
+                    users[i] = data;
+                    // eslint-disable-next-line no-loop-func
+                }).finally(() => {
+                    count++;
+                    if (count === comments.length) {
+                        resolve(users);
+                    }
+                });
+            }
         });
     }
 }

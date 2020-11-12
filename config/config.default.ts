@@ -22,7 +22,17 @@ export default (appInfo: EggAppInfo) => {
 
     config.jwt = {
         enable: true,
-        ignore: [ '/api/v1/login/', '/public/', '/api/v1/common/upload/' ], // 哪些请求不需要认证
+        ignore(ctx) {
+            const ignoredStaticUrls = [ '/api/v1/login', '/public', '/api/v1/common/upload' ];
+            const getNeedValidate = [ '/api/v1/userInfo', '/api/v1/star/isStar' ];
+            if (ignoredStaticUrls.some(urlPrefix => ctx.url.startsWith(urlPrefix))) {
+                return true;
+            }
+            if (ctx.method.toLowerCase() === 'get' && getNeedValidate.some(item => ctx.url.startsWith(item))) {
+                return false;
+            }
+            return ![ 'post', 'put', 'delete' ].includes(ctx.method.toLowerCase());
+        },
     };
     config.redis = {
         client: {
