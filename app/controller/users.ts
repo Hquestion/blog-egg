@@ -52,6 +52,12 @@ export default class UserController extends Controller {
         }
     }
 
+    public async getUserInfoByName() {
+        const { ctx } = this;
+        const { username } = ctx.request.query;
+        ctx.body = await ctx.service.users.findUserByUsername(username);
+    }
+
     public async getPosts() {
         const { ctx } = this;
         const id = ctx.params.id;

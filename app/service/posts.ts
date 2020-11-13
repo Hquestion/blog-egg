@@ -11,8 +11,8 @@ export default class PostService extends Service {
         if (name) {
             where.name = { [Op.like]: name };
         }
-        return await ctx.model.Post.findAll({
-            where: { isDelete: '0' },
+        return await ctx.model.Post.findAndCountAll({
+            where: { isDelete: '0', isPublished: '1' },
             include: [
                 {
                     model: ctx.model.User,

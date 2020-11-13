@@ -10,6 +10,7 @@ export default (app: Application) => {
     router.resources('users', '/api/v1/users', controller.users);
     router.get('/api/v1/userInfo', controller.users.getUserInfo);
     router.get('/api/v1/users/:id/getPosts', controller.users.getPosts);
+    router.get('/api/v1/getUserByName', controller.users.getUserInfoByName);
 
     router.resources('posts', '/api/v1/posts', controller.posts);
     router.post('/api/v1/posts/:uuid/comment', controller.posts.addPostComment);
