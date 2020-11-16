@@ -6,6 +6,7 @@ export default (app: Application) => {
     router.get('/', controller.home.index);
     router.post('/api/v1/login', controller.auth.login);
     router.post('/api/v1/logout', controller.auth.logout);
+    router.get('/api/v1/auth/redirect', controller.auth.githubLogin);
 
     router.resources('users', '/api/v1/users', controller.users);
     router.get('/api/v1/userInfo', controller.users.getUserInfo);

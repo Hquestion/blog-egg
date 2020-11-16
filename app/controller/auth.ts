@@ -32,4 +32,32 @@ export default class AuthController extends Controller {
             ctx.status = 401;
         }
     }
+
+    public async githubLogin() {
+        const { ctx, app } = this;
+        const { code } = ctx.query;
+        const authorizeRes = await ctx.curl('https://github.com/login/oauth/authorize');
+        console.log(authorizeRes);
+        const tokenRes = await ctx.curl(`https://github.com/login/oauth/access_token?
+        client_id=${app.config.github_client_id}&client_secret=${app.config.github_client_secret}
+        &code=${code}`, {
+            method: 'POST',
+            // 通过 contentType 告诉 HttpClient 以 JSON 格式发送
+            contentType: 'json',
+            headers: {
+                accept: 'application/json',
+            },
+        });
+        console.log(tokenRes);
+        const accessToken = tokenRes.data.accessToken;
+        console.log(accessToken);
+        const result = await ctx.curl('https://api.github.com/user', {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: `token ${accessToken}`,
+            },
+        });
+        return result;
+    }
 }

@@ -10,6 +10,8 @@ export default (appInfo: EggAppInfo) => {
     config.keys = appInfo.name + '_1604397095848_2169';
     config.jwtSecrect = '_1604397095848_2169';
     config.login_token_time = 24 * 60 * 60;
+    config.github_client_id = '1c965b3179608b9a014d';
+    config.github_client_secret = '92ef8da791d3662835cc0bde336d8717d067cc6e';
 
     // add your egg config in here
     config.middleware = [
