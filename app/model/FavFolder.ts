@@ -20,6 +20,7 @@ module.exports = app => {
 
     FavFolder.associate = function() {
         app.model.FavFolder.belongsTo(app.model.User, { as: 'userMeta', foreignKey: 'user_id' });
+        app.model.FavFolder.hasMany(app.model.Fav, { as: 'favList', foreignKey: 'folder_id' });
     };
 
     return FavFolder;

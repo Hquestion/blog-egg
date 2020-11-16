@@ -42,19 +42,14 @@ export default class UserService extends Service {
         });
     }
 
-    public async getPosts(uuid: string, title?: string, page?: paginationType) {
-        const { app } = this;
+    public async getPosts(uuid: string, isPublished = true, title?: string, pagination?: Partial<paginationType>) {
+        const { app, ctx } = this;
         const { Op } = app.Sequelize;
-        const where: {title?: any, limit?: number, offset?: number} = {};
+        const where: {title?: any} = {};
         if (title) {
             where.title = { [Op.like]: title };
         }
-        if (page && page.limit && page.limit === -1) {
-            where.limit = page.limit;
-            where.offset = page.start || 1;
-        }
-        const user = await this.findUserById(uuid);
-        return await user.getPosts({ where: { where, isDelete: '0' } });
+        return await ctx.service.posts.list(title || '', pagination, { isPublished, author: uuid });
     }
 
     public async findUserByUsername(username) {

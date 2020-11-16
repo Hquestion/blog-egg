@@ -1,5 +1,6 @@
 import { Controller } from 'egg';
 import { paginationType } from '../../typings';
+import { generatePagination } from '../extend/helper';
 
 export default class UserController extends Controller {
     public async index() {
@@ -62,12 +63,15 @@ export default class UserController extends Controller {
         const { ctx } = this;
         const id = ctx.params.id;
         const { query } = ctx.request;
-        const page = +query.page || 1;
-        const limit = +query.limit || -1;
-        let pagination: paginationType | undefined;
-        if (limit !== -1) {
-            pagination = { start: page, limit };
-        }
-        this.ctx.body = await this.ctx.service.users.getPosts(id, query.title || '', pagination);
+        const pagination: Partial<paginationType> = generatePagination(query);
+        this.ctx.body = await this.ctx.service.users.getPosts(id, true, query.title || '', pagination);
+    }
+
+    public async getDrafts() {
+        const { ctx } = this;
+        const id = ctx.params.id;
+        const { query } = ctx.request;
+        const pagination: Partial<paginationType> = generatePagination(query);
+        this.ctx.body = await this.ctx.service.users.getPosts(id, false, query.title || '', pagination);
     }
 }

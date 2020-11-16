@@ -3,16 +3,29 @@ import { v4 as uuid } from 'uuid';
 import dayjs from 'dayjs';
 import { CommentType, paginationType, PostType, UserType } from '../../typings';
 
+declare type PostListOptions = {
+    author: string,
+    isDelete: boolean,
+    isPublished: boolean
+};
+
 export default class PostService extends Service {
-    public async list(name: string, pagination?: Partial<paginationType>) {
+    public async list(name: string, pagination?: Partial<paginationType>, option?: Partial<PostListOptions>) {
         const { ctx, app } = this;
         const { Op } = app.Sequelize;
-        const where: {name?: any} = {};
+        const where: {name?: any, author?: string} = {};
         if (name) {
             where.name = { [Op.like]: name };
         }
+        if (option && option.author) {
+            where.author = option.author;
+        }
         return await ctx.model.Post.findAndCountAll({
-            where: { isDelete: '0', isPublished: '1' },
+            where: {
+                ...where,
+                isDelete: option?.isDelete === true ? '1' : '0',
+                isPublished: option?.isPublished === false ? '0' : '1',
+            },
             include: [
                 {
                     model: ctx.model.User,

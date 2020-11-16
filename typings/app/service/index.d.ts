@@ -9,6 +9,7 @@ type AutoInstanceType<T, U = T extends CanExportFunc ? T : T extends AnyFunc ? R
 import ExportAuth from '../../../app/service/auth';
 import ExportCategory from '../../../app/service/category';
 import ExportComment from '../../../app/service/comment';
+import ExportFavFolder from '../../../app/service/favFolder';
 import ExportPosts from '../../../app/service/posts';
 import ExportPostTag from '../../../app/service/postTag';
 import ExportSeries from '../../../app/service/series';
@@ -22,6 +23,7 @@ declare module 'egg' {
     auth: AutoInstanceType<typeof ExportAuth>;
     category: AutoInstanceType<typeof ExportCategory>;
     comment: AutoInstanceType<typeof ExportComment>;
+    favFolder: AutoInstanceType<typeof ExportFavFolder>;
     posts: AutoInstanceType<typeof ExportPosts>;
     postTag: AutoInstanceType<typeof ExportPostTag>;
     series: AutoInstanceType<typeof ExportSeries>;

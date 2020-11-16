@@ -10,6 +10,7 @@ module.exports = app => {
             type: STRING(30),
             allowNull: true,
         },
+        logo: STRING(100),
         isDelete: { type: STRING(1), defaultValue: '0', field: 'is_delete' },
         createdAt: { type: STRING(30), field: 'created_at' },
         updatedAt: { type: STRING(30), field: 'updated_at' },
@@ -20,6 +21,7 @@ module.exports = app => {
 
     Series.associate = function() {
         app.model.Series.belongsTo(app.model.User, { as: 'userMeta', foreignKey: 'user_id' });
+        app.model.Series.hasMany(app.model.Post, { as: 'postList', foreignKey: 'series' });
     };
 
     return Series;
