@@ -17,6 +17,7 @@ import 'egg-view';
 import 'egg-redis';
 import 'egg-mysql';
 import 'egg-sequelize';
+import 'egg-view-ejs';
 import { EggPluginItem } from 'egg';
 declare module 'egg' {
   interface EggPlugin {
@@ -35,5 +36,6 @@ declare module 'egg' {
     redis?: EggPluginItem;
     mysql?: EggPluginItem;
     sequelize?: EggPluginItem;
+    ejs?: EggPluginItem;
   }
 }

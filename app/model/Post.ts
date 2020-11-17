@@ -29,7 +29,7 @@ module.exports = app => {
         app.model.Post.belongsTo(app.model.User, { as: 'user', foreignKey: 'author_id' });
         app.model.Post.belongsTo(app.model.Category, { as: 'categoryMeta', foreignKey: 'category_id' });
         app.model.Post.belongsTo(app.model.Series, { as: 'seriesMeta', foreignKey: 'series_id' });
-        app.model.Post.hasMany(app.model.PostTag, { as: 'postTagMeta', foreignKey: 'post_tag_id', targetKey: 'post_tag_id' });
+        app.model.Post.hasMany(app.model.PostTag, { as: 'postTags', foreignKey: 'post_tag_id', sourceKey: 'postTag' });
     };
 
     return Post;

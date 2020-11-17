@@ -1,0 +1,17 @@
+<h4 style="text-align: center">授权成功</h4>
+<input id="token" type="hidden" value=<%= data.token %>>
+
+<script>
+  (function() {
+    window.addEventListener('load', e => {
+      console.log(e);
+      const token = document.querySelector('#token').value;
+      window.opener.postMessage({
+        type: 'LOGIN_SUCCESS',
+        data: {
+          token,
+        }
+      }, '*');
+    });
+  })();
+</script>

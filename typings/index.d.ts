@@ -9,6 +9,7 @@ import ExportPostTag from '../model/PostTag';
 import ExportSeries from '../model/Series';
 import ExportStar from '../model/Star';
 import ExportTag from '../model/Tag';
+import ExportSkill from '../model/Skill';
 
 declare module 'egg' {
 
@@ -25,4 +26,6 @@ export type PostTagType = ReturnType<typeof ExportPostTag>;
 export type SeriesType = ReturnType<typeof ExportSeries>;
 export type StarType = ReturnType<typeof ExportStar>;
 export type TagType = ReturnType<typeof ExportTag>;
+export type SkillType = ReturnType<typeof ExportSkill>;
+
 

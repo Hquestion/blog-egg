@@ -15,6 +15,7 @@ module.exports = app => {
 
     PostTag.associate = function() {
         app.model.PostTag.belongsTo(app.model.Tag, { as: 'tagMeta', foreignKey: 'tag_id' });
+        app.model.PostTag.hasOne(app.model.Post, { as: 'post', foreignKey: 'post_tag_id', sourceKey: 'post_tag_id' });
     };
 
     return PostTag;

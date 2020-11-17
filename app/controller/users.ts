@@ -74,4 +74,10 @@ export default class UserController extends Controller {
         const pagination: Partial<paginationType> = generatePagination(query);
         this.ctx.body = await this.ctx.service.users.getPosts(id, false, query.title || '', pagination);
     }
+
+    public async getSkills() {
+        const { ctx } = this;
+        const id = ctx.params.id;
+        this.ctx.body = await ctx.service.skill.list(id);
+    }
 }

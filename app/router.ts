@@ -12,6 +12,7 @@ export default (app: Application) => {
     router.get('/api/v1/userInfo', controller.users.getUserInfo);
     router.get('/api/v1/users/:id/getPosts', controller.users.getPosts);
     router.get('/api/v1/users/:id/getDrafts', controller.users.getDrafts);
+    router.get('/api/v1/users/:id/getSkills', controller.users.getSkills);
     router.get('/api/v1/getUserByName', controller.users.getUserInfoByName);
 
     router.resources('posts', '/api/v1/posts', controller.posts);
@@ -29,4 +30,6 @@ export default (app: Application) => {
     router.get('/api/v1/series/:id/posts', controller.series.getSeriesPosts);
 
     router.resources('favFolders', '/api/v1/favFolders', controller.favFolder);
+
+    router.resources('tags', '/api/v1/tags', controller.tag);
 };

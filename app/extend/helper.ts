@@ -13,3 +13,10 @@ export function generatePagination(query: { page?: number | string, pageSize?: n
         limit: page * pageSize,
     };
 }
+
+export function getRandomColor() {
+    return '#' + (function append(color) {
+        return (color += '0123456789abcdef'[Math.floor(Math.random() * 16)])
+        && (color.length === 6) ? color : append(color);
+    })('');
+}

@@ -41,9 +41,32 @@ export default class PostService extends Service {
 
     public async findPostById(uuid) {
         const { ctx } = this;
-        const post = await ctx.model.Post.findByPk(uuid);
-        const user = await ctx.model.User.findByPk(post.author);
-        post.setDataValue('user', user);
+        const post = await ctx.model.Post.findByPk(uuid, {
+            include: [
+                {
+                    model: ctx.model.PostTag,
+                    as: 'postTags',
+                    attributes: [ 'uuid', 'postTag' ],
+                    include: [
+                        { model: ctx.model.Tag, as: 'tagMeta', attributes: [ 'uuid', 'title' ] },
+                    ],
+                },
+                {
+                    model: ctx.model.Series,
+                    as: 'seriesMeta',
+                    attributes: [ 'uuid', 'title' ],
+                },
+                {
+                    model: ctx.model.User,
+                    as: 'user',
+                },
+                {
+                    model: ctx.model.Category,
+                    as: 'categoryMeta',
+                    attributes: [ 'uuid', 'title' ],
+                },
+            ],
+        });
         return post;
     }
 

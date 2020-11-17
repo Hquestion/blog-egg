@@ -9,7 +9,9 @@ import ExportFavFolder from '../../../app/controller/favFolder';
 import ExportHome from '../../../app/controller/home';
 import ExportPosts from '../../../app/controller/posts';
 import ExportSeries from '../../../app/controller/series';
+import ExportSkill from '../../../app/controller/skill';
 import ExportStar from '../../../app/controller/star';
+import ExportTag from '../../../app/controller/tag';
 import ExportUsers from '../../../app/controller/users';
 
 declare module 'egg' {
@@ -21,7 +23,9 @@ declare module 'egg' {
     home: ExportHome;
     posts: ExportPosts;
     series: ExportSeries;
+    skill: ExportSkill;
     star: ExportStar;
+    tag: ExportTag;
     users: ExportUsers;
   }
 }

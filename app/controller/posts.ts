@@ -34,7 +34,7 @@ export default class PostController extends Controller {
         let { tags } = data;
         if (tags) {
             tags = [ ...new Set(tags) ];
-            if (tags && tags.length > 1) {
+            if (tags && tags.length >= 1) {
                 const postTagId = uuid();
                 await ctx.service.postTag.createPostTags(postTagId, tags);
                 data.postTag = postTagId;

@@ -13,6 +13,12 @@ export default (appInfo: EggAppInfo) => {
     config.github_client_id = '1c965b3179608b9a014d';
     config.github_client_secret = '92ef8da791d3662835cc0bde336d8717d067cc6e';
 
+    exports.view = {
+        mapping: {
+            '.ejs': 'ejs',
+        },
+    };
+
     // add your egg config in here
     config.middleware = [
         'jwt',

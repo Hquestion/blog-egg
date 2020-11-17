@@ -4,18 +4,36 @@ import { v4 as uuid } from 'uuid';
 import { paginationType, TagType } from '../../typings';
 
 export default class TagService extends Service {
-    public async list(title: string, page?: paginationType) {
+    public async list(title: string, pagination?: Partial<paginationType>, options?: { userId: string }) {
         const { ctx, app } = this;
         const { Op } = app.Sequelize;
-        const where: {title?: any, limit?: number, offset?: number} = {};
+        const where: {title?: any, user?: string} = {};
         if (title) {
             where.title = { [Op.like]: title };
         }
-        if (page && page.limit && page.limit === -1) {
-            where.limit = page.limit;
-            where.offset = page.start || 1;
+        if (options?.userId) {
+            where.user = options.userId;
         }
-        return await ctx.model.Tag.findAll({ where: { where, isDelete: '0' } });
+        return await ctx.model.Tag.findAll({
+            where: {
+                ...where,
+                isDelete: '0',
+            },
+            include: [
+                {
+                    model: ctx.model.PostTag,
+                    as: 'postTags',
+                    attributes: [ 'uuid', 'postTag' ],
+                    include: [
+                        { model: ctx.model.Post, as: 'post', attributes: [ 'uuid' ] },
+                    ],
+                },
+            ],
+            order: [
+                [ 'createdAt', 'DESC' ],
+            ],
+            ...pagination,
+        });
     }
 
     public async findTagById(uuid: string) {
@@ -36,7 +54,7 @@ export default class TagService extends Service {
         const { ctx } = this;
         const params: Partial<TagType> = {};
         params.updatedAt = dayjs().format();
-        return await ctx.model.Tag.create({ ...params, ...data }, {
+        return await ctx.model.Tag.update({ ...params, ...data }, {
             where: { uuid },
         });
     }
