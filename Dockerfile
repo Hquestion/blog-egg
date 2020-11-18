@@ -6,9 +6,11 @@ RUN mkdir -p /home/Service
 
 WORKDIR /home/Service
 
-copy . /home/Service
+COPY package.json /home/Service
 
 RUN npm install
+
+COPY . /home/Service
 
 RUN npm run tsc
 
