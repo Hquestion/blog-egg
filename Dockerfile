@@ -12,9 +12,9 @@ RUN npm install
 
 RUN npm run tsc
 
-RUN npx sequelize db:migrate
+RUN npx sequelize db:migrate --env=production
 
 EXPOSE 7001
 
-CMD [ "npm", "start" ]
+CMD [ "npm", "start:docker" ]
 
