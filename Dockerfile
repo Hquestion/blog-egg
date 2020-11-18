@@ -12,6 +12,8 @@ RUN npm install
 
 RUN npm run tsc
 
+RUN npx sequelize db:migrate
+
 EXPOSE 7001
 
 CMD [ "npm", "start" ]
