@@ -12,6 +12,10 @@ export default class CommonController extends Controller {
         const files = ctx.request.files;
         ctx.logger.info('got %d files', ctx.request.files.length);
         const folderName = `/upload/${dayjs().format('YYYY-MM-DD')}/`;
+        const hasUploadFolder = fs.existsSync(path.join(config.baseDir, 'app/public/upload'));
+        if (!hasUploadFolder) {
+            fs.mkdirSync(path.join(config.baseDir, 'app/public/upload'));
+        }
         const absoluteFolderName = path.join(config.baseDir, 'app/public' + folderName);
         const hasFolder = fs.existsSync(absoluteFolderName);
         if (!hasFolder) {
