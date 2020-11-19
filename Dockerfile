@@ -7,8 +7,9 @@ RUN mkdir -p /home/Service
 WORKDIR /home/Service
 
 COPY package.json /home/Service
+COPY yarn.lock /home/Service
 
-RUN npm install
+RUN yarn
 
 COPY . /home/Service
 
