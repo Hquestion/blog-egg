@@ -90,8 +90,8 @@ export default class AuthController extends Controller {
 
     private generateUserInfoFormGithub(data): Partial<UserType> {
         const meta: Partial<UserType> = {};
-        meta.name = data.name;
-        meta.nickname = data.name;
+        meta.name = data.login || data.name;
+        meta.nickname = data.login || data.name;
         meta.avatar = data.avatar_url;
         meta.email = data.email;
         meta.location = data.location;

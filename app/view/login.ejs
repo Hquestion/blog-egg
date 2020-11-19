@@ -1,4 +1,8 @@
-<h4 style="text-align: center"><%= data.status === 'error' ? '授权失败' : '授权成功' %></h4>
+<% if (data.status === 'error') { %>
+    <h4 style="text-align: center">授权失败</h4>
+<% } else { %>
+    <h4 style="text-align: center">授权成功</h4>
+<% } %>
 <input id="token" type="hidden" value=<%= data.token %>>
 
 <script>
