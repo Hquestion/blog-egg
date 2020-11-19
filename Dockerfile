@@ -13,6 +13,8 @@ RUN yarn
 
 COPY . /home/Service
 
+VOLUME /home/Service/public
+
 RUN npm run tsc
 
 RUN npx sequelize db:migrate --env=production
