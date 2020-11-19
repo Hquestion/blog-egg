@@ -59,7 +59,16 @@ export default class AuthController extends Controller {
                     Authorization: `token ${accessToken}`,
                 },
             });
+            ctx.logger.info('[GITHUB LOGIN]: GITHUB REDIRECT GET USER INFO: ' + JSON.stringify(result));
             const userMeta = this.generateUserInfoFormGithub(result.data);
+            if (!userMeta.name) {
+                return await ctx.render('login.ejs', {
+                    status: 'error',
+                    data: '',
+                }, {
+                    viewEngine: 'ejs',
+                });
+            }
             let user = await ctx.service.users.findUserByUsername(userMeta.name);
             ctx.logger.info('[GITHUB LOGIN]: GET USER WITH name: ' + userMeta.name + ', user info: ' + JSON.stringify(user));
             if (user && user.uuid) {
