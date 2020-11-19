@@ -13,7 +13,7 @@ RUN yarn
 
 COPY . /home/Service
 
-VOLUME /home/Service/public
+VOLUME /home/Service/app/public
 
 RUN npm run tsc
 
