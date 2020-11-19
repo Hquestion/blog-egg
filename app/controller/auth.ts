@@ -61,7 +61,8 @@ export default class AuthController extends Controller {
             });
             const userMeta = this.generateUserInfoFormGithub(result.data);
             let user = await ctx.service.users.findUserByUsername(userMeta.name);
-            if (user) {
+            ctx.logger.info('[GITHUB LOGIN]: GET USER WITH name: ' + userMeta.name + ', user info: ' + JSON.stringify(user));
+            if (user && user.uuid) {
                 // 如果已注册，更新用户信息，生成jwt token，直接跳转登陆成功
             } else {
                 // 未注册，先创建用户，再生成jwt token，跳转登陆成功
