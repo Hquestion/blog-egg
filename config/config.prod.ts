@@ -2,7 +2,7 @@ import { EggAppConfig, PowerPartial } from 'egg';
 
 export default () => {
     const config: PowerPartial<EggAppConfig> = {};
-    config.staticUrlPrefix = 'http://hquestion.cn:7001/public';
+    config.staticUrlPrefix = '/public';
 
     config.redis = {
         client: {

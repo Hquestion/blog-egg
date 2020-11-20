@@ -8,7 +8,7 @@ while true; do
     echo "image path: $backend_image_path"
     if [[ ! $backend_image_path || $backend_image_path == 'n' || $backend_image_path == 'no' || $backend_image_path == 'N' || $backend_image_path == 'NO' ]]; then
         break;
-    elif [ -e $backend_image_path ]; then
+    elif [ -e "$backend_image_path" ]; then
         echo "镜像文件不存在，请重新输入："
     else
         break;
