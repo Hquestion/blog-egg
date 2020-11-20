@@ -1,8 +1,18 @@
 #!/usr/bin/env bash
+
 echo "您正在部署blog-egg项目..."
+default_image_name="blog-server"
+default_container_name="blog-server"
+default_volume_path="/home/hxl/blog/static"
+
+if [ "$1" ]; then
+    default_volume_path="$1"
+fi
+
 backend_image_path=
 backend_image_tag=
-echo "需要在线构建镜像吗？如果不需要，请输入镜像位置，否则直接回车："
+
+echo "想导入已构建好的镜像？请输入镜像tar包位置。否则直接回车在线构建镜像："
 while true; do
     read -r backend_image_path
     echo "image path: $backend_image_path"
@@ -17,14 +27,55 @@ done
 
 echo "输入镜像tag："
 read -r backend_image_tag
-echo "image tag: $backend_image_tag"
+# shellcheck disable=SC2236
+if [ ! -n "$backend_image_tag" ]; then
+    backend_image_tag="latest"
+fi
+echo "您的镜像标签: $backend_image_tag"
+
+{
+    docker rmi "$default_image_name":"$backend_image_tag"
+}
 
 # shellcheck disable=SC2236
 if [ ! -n "$backend_image_path" ]; then
     # no support image path, build it auto
-    docker build -t blog-server:"$backend_image_tag" .
+    docker build -t "$default_image_name":"$backend_image_tag" .
 else
     docker load -i "$backend_image_path"
 fi
 
-docker run --name blog-server -p 7001:7001 -v /home/hxl/blog/static:/home/Service/app/public:rw -d blog-server:"$backend_image_tag"
+while true; do
+    echo "是否现在创建并启动容器？（y or n）"
+    read -r is_create_container
+    case $is_create_container in
+        yes|y|Y|YES|Yes)
+            break
+            ;;
+        no|n|N|No|NO)
+            echo "镜像创建完成，退出程序。"
+            exit ;;
+        "")
+            break ;;
+    esac
+done
+
+{
+    if [ ! -e "$default_volume_path" ]; then
+        mkdir -p "$default_volume_path"
+    fi
+}
+
+{
+    docker rm -f "$default_container_name"
+}
+
+{
+   docker run \
+     --name "$default_container_name" \
+     -p 7001:7001 \
+     -v "$default_volume_path":/home/Service/app/public:rw \
+     -d "$default_image_name":"$backend_image_tag"
+} && {
+    echo "$default_container_name 容器启动成功。"
+}
